@@ -31,7 +31,7 @@ declare module "lucia" {
   }
 }
 
-export type UserRowT = {
+export type UserT = {
   id: string;
   email: string;
   hashed_password: string;

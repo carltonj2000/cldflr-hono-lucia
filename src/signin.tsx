@@ -1,11 +1,10 @@
-import { Hono } from "hono";
-
 import Layout from "./layout";
 import { signInV } from "./schemas";
 import { Scrypt } from "lucia";
-import { UserRowT, initializeLucia } from "./db";
+import { UserT, initializeLucia } from "./db";
+import appInit from "./app";
 
-const app = new Hono();
+const app = appInit();
 
 app.get("/", (c) => {
   return c.html(
@@ -28,7 +27,7 @@ app.post("/", signInV, async (c) => {
   const { email, password } = c.req.valid("form");
   const user = await c.env.DB.prepare("select * from users where email=?")
     .bind(email)
-    .first<UserRowT>();
+    .first<UserT>();
 
   if (!user) return c.body("User does not exist", 400);
 

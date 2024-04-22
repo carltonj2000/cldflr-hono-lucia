@@ -1,5 +1,3 @@
-import { Hono } from "hono";
-import type { User, Session } from "lucia";
 import { verifyRequestOrigin } from "lucia";
 import { getCookie } from "hono/cookie";
 
@@ -7,19 +5,9 @@ import signUp from "./signup";
 import signIn from "./signin";
 import home from "./home";
 import { initializeLucia } from "./db";
+import appInit from "./app";
 
-type Bindings = {
-  DB: D1Database;
-};
-
-const app = new Hono<{
-  Bindings: Bindings;
-  Variables: {
-    user: User | null;
-    session: Session | null;
-  };
-}>();
-
+const app = appInit();
 app.use("*", async (c, next) => {
   // CSRF middleware
   if (c.req.method === "GET") {

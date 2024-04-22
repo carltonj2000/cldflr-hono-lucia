@@ -1,11 +1,10 @@
-import { Hono } from "hono";
-
 import Layout from "./layout";
 import { signUpV } from "./schemas";
 import { generateId, Scrypt } from "lucia";
 import { initializeLucia } from "./db";
+import appInit, { Bindings } from "./app";
 
-const app = new Hono();
+const app = appInit();
 
 app.get("/", (c) => {
   return c.html(
