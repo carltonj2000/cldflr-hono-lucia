@@ -36,3 +36,9 @@ export type UserT = {
   email: string;
   hashed_password: string;
 };
+
+export type SessionT = {
+  id: string;
+  expires_at: number;
+  user_id: string;
+};

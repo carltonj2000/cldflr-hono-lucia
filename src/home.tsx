@@ -28,7 +28,7 @@ app.get("/", (c) => {
 
 app.post("signout", async (c) => {
   const lucia = initializeLucia(c.env.DB);
-  const session: any = c.get("session");
+  const session = c.get("session");
   if (session) await lucia.invalidateUserSessions(session.id);
   const sessionCookie = lucia.createBlankSessionCookie();
   c.header("Set-Cookie", sessionCookie.serialize());
