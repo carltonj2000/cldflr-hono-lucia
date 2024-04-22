@@ -1,0 +1,7 @@
+name = "cldflr-hono-lucia"
+compatibility_date = "2023-12-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "cldflr-hono-lucia"
+database_id = "cd12ab1d-083e-4068-b401-8c48c6dbe66c"
