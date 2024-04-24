@@ -3,6 +3,7 @@ import type { User, Session } from "lucia";
 
 export type Bindings = {
   DB: D1Database;
+  DKIM_PRIVATE_KEY?: string;
 };
 
 const appInit = () =>

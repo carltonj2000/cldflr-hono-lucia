@@ -1,4 +1,6 @@
-const emailVerificationCode = async (
+import { Bindings } from "./app";
+
+export const emailVerificationCode = async (
   env: Bindings,
   recipient: string,
   subject: string,
@@ -14,7 +16,7 @@ const emailVerificationCode = async (
       },
     ],
     from: {
-      email: "appsfortracking@gmail.com",
+      email: "carlton@appsfortracking.com",
       name: "Carlton Joseph",
     },
     subject: subject,
@@ -27,13 +29,15 @@ const emailVerificationCode = async (
   };
 
   if (env.DKIM_PRIVATE_KEY) {
-    await fetch("https://api.mailchannels.net/tx/v1/send", {
+    const resp = await fetch("https://api.mailchannels.net/tx/v1/send", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify(body),
     });
+    const respText = await resp.text();
+    console.log({ respText });
   } else {
     console.log("Sending email");
     console.log(body);

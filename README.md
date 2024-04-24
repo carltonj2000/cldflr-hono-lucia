@@ -2,10 +2,15 @@
 
 ## Code History
 
-The code in this repository is base on the following:
+The code in this repository is base on the following.
 
 - https://youtu.be/ZD2Lt5GFo48?si=VhFNeU_7fNgmsnqK
 - https://github.com/andfadeev/cloudflare-hono-lucia-auth
+
+Email setup instructions are at the following.
+
+- https://blog.cloudflare.com/sending-email-from-workers-with-mailchannels
+- https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown
 
 ## Code Creation
 
