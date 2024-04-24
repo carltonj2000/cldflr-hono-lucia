@@ -16,6 +16,8 @@ npm install lucia oslo
 npm install @lucia-auth/adapter-sqlite
 npm i zod
 npm i @hono/zod-validator
+npm install nodemailer
+npm install @types/nodemailer -D
 ```
 
 ### Cloudflare D1
@@ -27,4 +29,10 @@ npx wrangler d1 migrations create cldflr-hono-lucia init
 npx wrangler d1 migrations create cldflr-hono-lucia email_verification
 npx wrangler d1 migrations apply cldflr-hono-lucia
 npx wrangler d1 migrations apply cldflr-hono-lucia --remote
+```
+
+```bash
+npx wrangler d1 execute cldflr-hono-lucia --command "select * from users"
+npx wrangler d1 execute cldflr-hono-lucia --command 'delete from users where email = "carlton.joseph@gmail.com"'
+npx wrangler d1 execute cldflr-hono-lucia --command "select * from email_verification_codes"
 ```

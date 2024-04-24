@@ -15,6 +15,7 @@ export function initializeLucia(D1: D1Database) {
     getUserAttributes: (attributes) => {
       return {
         email: attributes.email,
+        email_verified: Boolean(attributes.email_verified),
       };
     },
   });
@@ -22,6 +23,7 @@ export function initializeLucia(D1: D1Database) {
 
 interface DatabaseUserAttributes {
   email: string;
+  email_verified: number;
 }
 
 declare module "lucia" {
@@ -35,10 +37,19 @@ export type UserT = {
   id: string;
   email: string;
   hashed_password: string;
+  email_verified: number;
 };
 
 export type SessionT = {
   id: string;
   expires_at: number;
   user_id: string;
+};
+
+export type EmailVerificationCodeT = {
+  id: number;
+  email: string;
+  user_id: string;
+  code: string;
+  expires_at: string;
 };

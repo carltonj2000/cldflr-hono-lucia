@@ -2,7 +2,9 @@ import Layout from "./layout";
 import { signUpV } from "./schemas";
 import { generateId, Scrypt } from "lucia";
 import { initializeLucia } from "./db";
-import appInit, { Bindings } from "./app";
+import appInit from "./app";
+import { generateEmailVerificationCode } from "./util";
+import { emailVerificationCode } from "./email";
 
 const app = appInit();
 
@@ -25,16 +27,29 @@ app.get("/", (c) => {
 
 app.post("/", signUpV, async (c) => {
   const { email, password } = c.req.valid("form");
-  console.log({ email, password });
   const hashedPassword = await new Scrypt().hash(password);
   const userId = generateId(15);
   const lucia = initializeLucia(c.env.DB);
   try {
     const insertUser = await c.env.DB.prepare(
-      "insert into users (id, email, hashed_password) values (?, ?, ?) returning *"
+      "insert into users (id, email, hashed_password, email_verified) " +
+        "values (?, ?, ?, ?) returning *"
     )
-      .bind(userId, email, hashedPassword)
+      .bind(userId, email, hashedPassword, false)
       .first();
+
+    const verificationCode = await generateEmailVerificationCode(
+      userId,
+      email,
+      c.env.DB
+    );
+
+    await emailVerificationCode(
+      {},
+      email,
+      "Verification Code",
+      verificationCode
+    );
     const session = await lucia.createSession(userId, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
     c.header("Set-Cookie", sessionCookie.serialize());

@@ -22,3 +22,13 @@ export const signInV = zValidator("form", signInS, (result, c) => {
     return c.text("Invalid email or password!", 400);
   }
 });
+
+export const verifyS = z.object({
+  verificationCode: z.string(),
+});
+
+export const verifyV = zValidator("form", verifyS, (result, c) => {
+  if (!result.success) {
+    return c.text("Verification Code Invalid!", 400);
+  }
+});
