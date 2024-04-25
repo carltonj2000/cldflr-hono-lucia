@@ -1,5 +1,9 @@
 # Hono Lucia On Cloudflare Workers
 
+After `npm run deploy` set the env variable DKIM_PRIVATE_KEY to
+the content (on vercel/host) of the `priv_key.txt` file.
+Use `npx wrangler tail` to see logs of running deployment.
+
 ## Code History
 
 The code in this repository is base on the following.
@@ -12,11 +16,15 @@ Email setup instructions are at the following.
 - https://blog.cloudflare.com/sending-email-from-workers-with-mailchannels
 - https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown
 - https://support.mailchannels.com/hc/en-us/articles/7122849237389-Adding-a-DKIM-Signature
+- https://support.google.com/a/answer/81126
 
 ## Domain Lockdown
 
+Used the first one below but the second was suggested and did not work.
+
 ```DNS TXT
-_mailchannels.appsfortracking.com
+name: _mailchannels, value: v=mc1 cfId=carltonjoseph.workers.dev
+name: _mailchannels, value: v=mc1 cfId=cldflr-hono-lucia.workers.dev
 ```
 
 ## DKIM

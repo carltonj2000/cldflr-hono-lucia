@@ -33,15 +33,16 @@ app.get("/", (c) => {
         <a href="signup">Sign Up</a>
         <br />
         <a href="signin">Sign In</a>
-        <br />
+        {/* <br />
         <form method="post" action="sendmail">
           <button type="submit">Sendmail</button>
-        </form>
+        </form> */}
       </Layout>
     );
   }
 });
 
+/* function below used for testing the email */
 app.post("sendmail", async (c) => {
   await emailVerificationCode(
     c.env,
@@ -49,6 +50,7 @@ app.post("sendmail", async (c) => {
     "Verification Code",
     "thisIsTheCode"
   );
+  return c.redirect("/");
 });
 
 app.post("signout", async (c) => {

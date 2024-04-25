@@ -5,6 +5,7 @@ dist
 .env
 priv_key.pem
 priv_key.text
+error.txt
 
 # Change them to your taste:
 package-lock.json
