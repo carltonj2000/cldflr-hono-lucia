@@ -27,7 +27,7 @@ export const emailVerificationCode = async (
       },
     ],
   };
-
+  console.log({ pk: env.DKIM_PRIVATE_KEY });
   if (env.DKIM_PRIVATE_KEY) {
     const resp = await fetch("https://api.mailchannels.net/tx/v1/send", {
       method: "POST",

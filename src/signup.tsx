@@ -45,7 +45,7 @@ app.post("/", signUpV, async (c) => {
     );
 
     await emailVerificationCode(
-      {},
+      c.env,
       email,
       "Verification Code",
       verificationCode

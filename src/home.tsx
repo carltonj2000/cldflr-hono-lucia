@@ -3,6 +3,7 @@ import { EmailVerificationCodeT, UserT, initializeLucia } from "./db";
 import appInit from "./app";
 import { verifyV } from "./schemas";
 import { isWithinExpirationDate } from "oslo";
+import { emailVerificationCode } from "./email";
 
 const app = appInit();
 
@@ -32,9 +33,22 @@ app.get("/", (c) => {
         <a href="signup">Sign Up</a>
         <br />
         <a href="signin">Sign In</a>
+        <br />
+        <form method="post" action="sendmail">
+          <button type="submit">Sendmail</button>
+        </form>
       </Layout>
     );
   }
+});
+
+app.post("sendmail", async (c) => {
+  await emailVerificationCode(
+    c.env,
+    "carlton.joseph@gmail.com",
+    "Verification Code",
+    "thisIsTheCode"
+  );
 });
 
 app.post("signout", async (c) => {

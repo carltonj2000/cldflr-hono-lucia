@@ -11,6 +11,29 @@ Email setup instructions are at the following.
 
 - https://blog.cloudflare.com/sending-email-from-workers-with-mailchannels
 - https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown
+- https://support.mailchannels.com/hc/en-us/articles/7122849237389-Adding-a-DKIM-Signature
+
+## Domain Lockdown
+
+```DNS TXT
+_mailchannels.appsfortracking.com
+```
+
+## DKIM
+
+```bash
+openssl genrsa 2048 | tee priv_key.pem | openssl rsa -outform der | openssl base64 -A > priv_key.txt
+echo -n "v=DKIM1;p=" > pub_key_record.txt && \
+openssl rsa -in priv_key.pem -pubout -outform der | openssl base64 -A >> pub_key_record.txt
+```
+
+Add the following DNS TXT record.
+
+```dns
+mailchannels._domainkey IN TXT "v=DKIM1; p=<content of the file pub_key_record.txt>"
+
+_dmarc IN TXT "v=DMARC1; p=reject; adkim=s; aspf=s; rua=mailto:YYY; ruf=mailto:YYY pct=100; fo=1;"
+```
 
 ## Code Creation
 
